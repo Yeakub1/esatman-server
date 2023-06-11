@@ -37,6 +37,12 @@ async function run() {
          const result = await usersCollection.insertOne(user);
          res.send(result);
        });
+    
+    app.get("/users", async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result);
+    });
+    
 
 
     // Send a ping to confirm a successful connection
