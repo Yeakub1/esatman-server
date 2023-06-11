@@ -25,25 +25,33 @@ async function run() {
     // await client.connect();
 
     const usersCollection = client.db("eastmanDb").collection("users");
+    const classCollection = client.db("eastmanDb").collection("class");
 
-      // save user email and role in DB
-       app.post("/users", async (req, res) => {
-         const user = req.body;
-         const query = { email: user.email };
-         const alredayUser = await usersCollection.findOne(query);
-         if (alredayUser) {
-          return res.send({message: 'user alroday login'})
-         }
-         const result = await usersCollection.insertOne(user);
-         res.send(result);
-       });
-    
+    // save user email and role in DB
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const query = { email: user.email };
+      const alredayUser = await usersCollection.findOne(query);
+      if (alredayUser) {
+        return res.send({ message: "user alroday login" });
+      }
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
     app.get("/users", async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });
-    
 
+    // myclass colletion
+    app.post("/class", async (req, res) => {
+      const item = req.body;
+      const result = await classCollection.insertOne(item);
+      res.send(result);
+    });
+    
+   
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
