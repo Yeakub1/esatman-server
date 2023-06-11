@@ -26,23 +26,18 @@ async function run() {
 
     const usersCollection = client.db("eastmanDb").collection("users");
 
-    //   save user email and role in DB
-    app.put("/users/:email", async (req, res) => {
-      const email = req.params.email;
-      const user = req.body;
-      const query = { email: email };
-      const options = { upsert: true };
-      const updatedUser = {
-        $set: { user },
-      };
-      const result = await usersCollection.updateOne(
-        query,
-        updatedUser,
-        options
-      );
+      // save user email and role in DB
+       app.post("/users", async (req, res) => {
+         const user = req.body;
+         const query = { email: user.email };
+         const alredayUser = await usersCollection.findOne(query);
+         if (alredayUser) {
+          return res.send({message: 'user alroday login'})
+         }
+         const result = await usersCollection.insertOne(user);
+         res.send(result);
+       });
 
-      res.send(result);
-    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
