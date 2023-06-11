@@ -50,8 +50,23 @@ async function run() {
       const result = await classCollection.insertOne(item);
       res.send(result);
     });
+
+     app.get("/class", async (req, res) => {
+       const result = await classCollection.find().toArray();
+       res.send(result);
+     });
     
-   
+      app.get("/class/:email", async (req, res) => {
+        console.log(req.params.email);
+        const result = await classCollection
+          .find({
+            email: req.params.email,
+          })
+          .toArray();
+        res.send(result);
+      });
+
+    
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
