@@ -93,7 +93,7 @@ async function run() {
 
       const query = { email: email };
       const user = await usersCollection.findOne(query);
-      res.send({role:user?.role});
+      res.send({ role: user?.role });
     });
 
     app.patch("/users/admin/:id", async (req, res) => {
@@ -107,20 +107,6 @@ async function run() {
       const result = await usersCollection.updateOne(filter, updateDoc);
       res.send(result);
     });
-    
-    // instructor
-    // app.get("/users/instructor/:email", verifyJWT, async (req, res) => {
-    //   const email = req.params.email;
-
-    //   if (req.decoded.email !== email) {
-    //     res.send({ admin: false });
-    //   }
-
-    //   const query = { email: email };
-    //   const user = await usersCollection.findOne(query);
-    //   const result = { admin: user?.role === "admin" };
-    //   res.send(result);
-    // });
 
     app.patch("/users/instructor/:id", async (req, res) => {
       const id = req.params.id;
@@ -134,7 +120,6 @@ async function run() {
       res.send(result);
     });
 
-  
     // myclass colletion
     app.post("/class", async (req, res) => {
       const item = req.body;
@@ -147,7 +132,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/class/:email", verifyJWT, async (req, res) => {
+    app.get("/class/:email", async (req, res) => {
       console.log(req.params.email);
       const result = await classCollection
         .find({
@@ -163,6 +148,7 @@ async function run() {
       const result = await classCollection.deleteOne(query);
       res.send(result);
     });
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
