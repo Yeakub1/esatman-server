@@ -149,6 +149,10 @@ async function run() {
       res.send(result);
     });
 
+    const car = require("./d/ist.json");
+    app.get("/instructor", (req, res) => {
+      res.send(car);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
