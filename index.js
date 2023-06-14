@@ -87,7 +87,6 @@ async function run() {
     });
 
     // admin
-
     app.get("/users/admin/:email", verifyJWT, async (req, res) => {
       const email = req.params.email;
 
@@ -160,7 +159,6 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
-    // Ensures that the client will close when you finish/error
     // await client.close();
   }
 }
